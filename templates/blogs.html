@@ -6,7 +6,7 @@
 <p>No Posts Yet</p>
 {% else %}
     {% for post in posts %}
-        <h3>{{post.title}}</h3>
+        <h3><a href='/blog?id={{post.id}}'>{{post.title}}</a></h3>
         <p>{{post.text}}</p>
         <hr />
     {% endfor %}

@@ -24,6 +24,15 @@ def posts():
     posts = Post.query.all()
     return render_template('blogs.html', posts=posts)
 
+@app.route('/blog', methods=['GET'])
+def view_blog():
+    id = request.args.get('id')
+    blog_post = Post.query.filter_by(id=id).first()
+    title = blog_post.title
+    text = blog_post.text
+    return render_template('blog.html', title=title, text=text)
+
+
 @app.route('/newpost', methods=['POST', 'GET'])
 def new_post():
     
@@ -35,7 +44,8 @@ def new_post():
             new_post = Post(title, text)
             db.session.add(new_post)
             db.session.commit()
-            return redirect('/posts')
+            id = str(new_post.id)
+            return redirect('/blog?id='+id)
         else:
             flash("Please make sure neither field is empty!")
             return render_template('newpost.html', title=title, text=text)
